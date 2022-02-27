@@ -1,5 +1,6 @@
 import random
-
+from string import punctuation
+from turtle import pu
 
 guesses = " "
 
@@ -7,28 +8,51 @@ def play_game(file):
     with open(file) as file:
         word = file.read().split()
         picker = random.choice(word).casefold()
+        hider = len(picker) * '_ '
+        
+
     turns = 8
-    guesses = " "
+    guesses = [ ]
     while turns > 0:
         
-        for char in picker:
-            
-            if char in guesses:
-                print(char, end= " ")
+        print(hider)
+        print(picker)
+        guess = input("Take a whirl: ")
+        guesses += guess.split()
+
+        if guess in picker:
                 
-            else:
-                print("_ " , end = ' ')
+                print(guess, end= " ")
+                print( 'yup')
+                print(turns)
+                
+        if guess not in picker:
                 turns -= 1
-            guess = input("Take a whirl: ")
-            guesses += guess
-            if guess not in picker:
-                turns -= 1
-                print(turns, + "Turns remaining")
-            if turns <= 0:
+                print( 'nope')
+                
+        if len(guess) != 1:
+                print("Caint guess more than one, pardner")
+                turns += 1
+                print(turns)
+
+
+        if guess.isdigit():
+                print("no numbers loud here")
+                turns +=1
+                print(turns)
+        if guess in punctuation:
+            print('Nope, try again')
+            turns += 1
+            print(turns)
+
+
+        if turns <= 0:
                 turns = 0
                 print("Your word was "+ picker)
                 exit()
-            
+
+
+
 
 
 
