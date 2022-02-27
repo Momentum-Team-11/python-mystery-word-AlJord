@@ -1,27 +1,39 @@
 import random
 
 
+guesses = " "
+
 def play_game(file): 
     with open(file) as file:
         word = file.read().split()
         picker = random.choice(word).casefold()
-        turns = 8
-        guesses = " "
-        while turns > 0:
-            failed = 0
-            for char in picker:
-                if char in guesses:
-                    print(char, end= " ")
-                else:
-                    print("_ " , end = '')
-                    failed += 1
-                guess = input("Take a whirl: ")
-                guesses += guess
+    turns = 8
+    guesses = " "
+    while turns > 0:
+        
+        for char in picker:
+            
+            if char in guesses:
+                print(char, end= " ")
+                
+            else:
+                print("_ " , end = ' ')
+                turns -= 1
+            guess = input("Take a whirl: ")
+            guesses += guess
             if guess not in picker:
                 turns -= 1
-                print("Try again, you have " + turns, "left")
+                print(turns, + "Turns remaining")
+            if turns <= 0:
+                turns = 0
+                print("Your word was "+ picker)
+                exit()
+            
 
 
+
+
+#no win condition, if correct letter user needs to know, display horizontally when guess == 0 end
 
 
 
