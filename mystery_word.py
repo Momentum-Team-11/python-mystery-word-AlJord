@@ -8,40 +8,56 @@ def play_game(file):
     with open(file) as file:
         word = file.read().split()
         picker = random.choice(word).casefold()
-        hider = len(picker) * '_ '
         
-
+        
+    wrong_guess = []
     turns = 8
-    guesses = [ ]
+    display = ["_"] * len(picker)
+    print(display)
     while turns > 0:
-        
-        print(hider)
-        print(picker)
-        guess = input("Take a whirl: ")
-        guesses += guess.split()
+        if '_' not in display:
+            print('you win')
+            exit()
 
-        if guess in picker:
+        i = 0
+        
+        char = input("Take a whirl: ")
+        if char in wrong_guess:
+            print('Shew far pardner already shot that one')
+            print(turns)
+
+
+        elif char in picker:
+            for letter in picker:
+                if letter == char:
+                    display[i] = char
+                i += 1
+            print(display)
+            print (turns)
+
                 
-                print(guess, end= " ")
-                print( 'yup')
-                print(turns)
-                
-        if guess not in picker:
-                turns -= 1
-                print( 'nope')
-                
-        if len(guess) != 1:
+        else:
+            wrong_guess.append(char)
+            turns -= 1
+            print( 'nope')
+            print(wrong_guess)
+            print(turns)
+            
+
+        if len(char) != 1:
                 print("Caint guess more than one, pardner")
+                
+                print(turns)
+                print(display)
+
+
+        if char.isdigit():
+                print("No numbers loud here")
                 turns += 1
                 print(turns)
 
 
-        if guess.isdigit():
-                print("no numbers loud here")
-                turns +=1
-                print(turns)
-        if guess in punctuation:
-            print('Nope, try again')
+        if char in punctuation:
             turns += 1
             print(turns)
 
